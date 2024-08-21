@@ -57,7 +57,7 @@ To get a local copy up and running follow these simple example steps.
 This is a list of things you will need to use the software and how I got to work on this project
 * Java 17
 * Maven
-* H2 database
+* Springboot database
 
 ### Installation
 
