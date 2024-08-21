@@ -1,6 +1,7 @@
 package com.sunday.Multi_User_Management_App.service.Impl;
 
 import com.sunday.Multi_User_Management_App.DTO.ApiResponseBody;
+import com.sunday.Multi_User_Management_App.DTO.request.MailRequest;
 import com.sunday.Multi_User_Management_App.DTO.request.TaskRequest;
 import com.sunday.Multi_User_Management_App.DTO.response.TaskResponse;
 import com.sunday.Multi_User_Management_App.enums.ROLE;
@@ -14,6 +15,7 @@ import com.sunday.Multi_User_Management_App.model.Task;
 import com.sunday.Multi_User_Management_App.model.User;
 import com.sunday.Multi_User_Management_App.repository.TaskRepository;
 import com.sunday.Multi_User_Management_App.repository.UserRepository;
+import com.sunday.Multi_User_Management_App.service.EmailService;
 import com.sunday.Multi_User_Management_App.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -32,6 +34,7 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
     private final UserRepository userRepository;
+    private final EmailService emailService;
 
     @Override
     public TaskResponse createTask(TaskRequest taskRequest) {
@@ -75,6 +78,13 @@ public class TaskServiceImpl implements TaskService {
         task.setCreatedBy(creator);
         Task savedTask = taskRepository.save(task);
 
+        MailRequest mailRequest = MailRequest.builder()
+                .to(assignedUser.getEmail())
+                .subject("New Task Assigned: " + task.getTitle())
+                .message("You have been assigned a new task: " + task.getTitle() + ". Please check your task list for more details.")
+                .build();
+        emailService.sendEmailAlert(mailRequest);
+
         return taskMapper.mapToDTO(savedTask);
     }
 
@@ -98,6 +108,13 @@ public class TaskServiceImpl implements TaskService {
 
         task.setStatus(status);
         Task updatedTask = taskRepository.save(task);
+
+        MailRequest mailRequest = MailRequest.builder()
+                .to(currentUser.getEmail())
+                .subject("Task Status Updated: " + task.getTitle())
+                .message("The status of your task '" + task.getTitle() + "' has been updated to: " + status.name())
+                .build();
+        emailService.sendEmailAlert(mailRequest);
 
         return taskMapper.mapToDTO(updatedTask);
     }
