@@ -1,10 +1,12 @@
 package com.sunday.Multi_User_Management_App.DTO.response;
 
 import com.sunday.Multi_User_Management_App.enums.TaskStatus;
+import com.sunday.Multi_User_Management_App.model.Tag;
 import com.sunday.Multi_User_Management_App.model.User;
 import lombok.*;
 
 import java.time.LocalDate;
+
 
 @Builder
 @NoArgsConstructor
@@ -18,5 +20,6 @@ public class TaskResponse {
     private TaskStatus status;
     private User assignedUser;
     private User createdBy;
+    private Tag tags;
 
 }

@@ -4,6 +4,7 @@ import com.sunday.Multi_User_Management_App.DTO.ApiResponseBody;
 import com.sunday.Multi_User_Management_App.DTO.request.TaskRequest;
 import com.sunday.Multi_User_Management_App.DTO.response.TaskResponse;
 import com.sunday.Multi_User_Management_App.enums.InternalCodeEnum;
+import com.sunday.Multi_User_Management_App.enums.TagMark;
 import com.sunday.Multi_User_Management_App.enums.TaskStatus;
 import com.sunday.Multi_User_Management_App.exception.TaskNotFound;
 import com.sunday.Multi_User_Management_App.exception.UnAuthorizedException;
@@ -14,9 +15,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/tasks")
@@ -33,8 +38,12 @@ public class TaskController {
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @PostMapping("/create")
-    public ResponseEntity<ApiResponseBody<TaskResponse>> createTask(@RequestBody @Valid TaskRequest taskRequest) {
+    public ResponseEntity<ApiResponseBody<TaskResponse>> createTask(
+            @RequestBody @Valid TaskRequest taskRequest,
+            @RequestParam TagMark tagMarks) {
+
         TaskResponse taskResponse = taskService.createTask(taskRequest);
+
         return ResponseEntity.ok(new ApiResponseBody<>(true, "Task created successfully",
                 InternalCodeEnum.CARE_PULSE_001, taskResponse));
     }
@@ -106,4 +115,29 @@ public class TaskController {
                     InternalCodeEnum.CARE_PULSE_004, null));
         }
     }
+
+    @Operation(summary = "Filter Tasks by Tags", description = "Retrieve tasks filtered by tags with pagination")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Tasks retrieved successfully"),
+            @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    @GetMapping("/tasks/filter")
+    public ResponseEntity<ApiResponseBody<ApiResponseBody.Wrapper<List<TaskResponse>>>> filterTasksByTags(
+            @RequestParam List<TagMark> tagMarks,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        ApiResponseBody.Wrapper<List<TaskResponse>> paginatedTasks = taskService.filterTasksByTags(tagMarks, pageable);
+
+        ApiResponseBody<ApiResponseBody.Wrapper<List<TaskResponse>>> responseBody = new ApiResponseBody<>(
+                true, "Tasks retrieved successfully",
+                InternalCodeEnum.CARE_PULSE_001, paginatedTasks
+        );
+
+        return ResponseEntity.ok(responseBody);
+    }
+
 }

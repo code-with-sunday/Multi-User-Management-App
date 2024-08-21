@@ -1,6 +1,8 @@
 package com.sunday.Multi_User_Management_App.DTO.request;
 
+import com.sunday.Multi_User_Management_App.enums.TagMark;
 import com.sunday.Multi_User_Management_App.enums.TaskStatus;
+import com.sunday.Multi_User_Management_App.model.Tag;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.FutureOrPresent;
@@ -10,6 +12,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Builder
 @NoArgsConstructor
@@ -35,5 +38,7 @@ public class TaskRequest {
     private TaskStatus status;
 
     private String assignedUserEmail;
+
+    private List<Tag> tags;
 
 }
