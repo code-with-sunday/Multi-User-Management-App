@@ -24,7 +24,7 @@
 
 ![MULTI-USER-MANAGEMENT-APPLICATION](image.png)
 
-[![EVENT BOOKING APPLICATION][SWAGGER-ENDPOINT-VIEW]](image.png)
+[![MULTI-USER-MANAGEMENT-APPLICATION][SWAGGER-ENDPOINT-VIEW]](image.png)
 
 This project is a comprehensive Multi-User Task Management API designed to demonstrate backend development skills and proficiency. The API supports user management with role-based access control, allowing both regular users and admins to manage tasks efficiently. The project is built with the following key features:
 
@@ -79,33 +79,30 @@ This is a list of things you will need to use the software and how I got to work
 - [ ] <span style="font-size: 20px; font-weight: bold;">User Registration / Sign-up : </span>
 <span style="font-size: 20px; ">User's registers smartly with email and password</span>
 
-  ![EVENT BOOKING APPLICATION](sign_up.png)
-  ![EVENT BOOKING APPLICATION](response_signup.png)
+  ![MULTI-USER-MANAGEMENT-APPLICATION](sign_up.png)
+  ![MULTI-USER-MANAGEMENT-APPLICATION](response_signup.png)
 
 
 - [ ] <span style="font-size: 20px; font-weight: bold;">User Login / JWT TOKEN : </span>
  <span style="font-size: 20px; ">On login exact role is authomatically determined and jwt token generated</span>
 
-  ![EVENT BOOKING APPLICATION](login_request.png)
-  ![EVENT BOOKING APPLICATION](login_response.png)
+  ![MULTI-USER-MANAGEMENT-APPLICATION](login_request.png)
+  ![MULTI-USER-MANAGEMENT-APPLICATION](login_response.png)
 
 - [ ] <span style="font-size: 20px; font-weight: bold;">Admin creation and Admin creating admin</span>
-  ![EVENT BOOKING APPLICATION](./admin_created.png)
-  ![EVENT BOOKING APPLICATION](./admin_creating_admin.png)
+  ![MULTI-USER-MANAGEMENT-APPLICATION](./admin_created.png)
+  ![MULTI-USER-MANAGEMENT-APPLICATION](./admin_creating_admin.png)
 
-
-
-
-<!-- TEST -->
-## Sample Test
-
-![EVENT BOOKING APPLICATION](passed_test.png)
-![EVENT BOOKING APPLICATION](passed_test_multiple_assumptions.png)
-
+  
 <!-- DB -->
 ## Sample Data Persisting DB
 <span style="font-size: 20px; font-weight: bold;">Persisting DB on login before full profile creation, showing password hashed and store to db</span>
 ![MULTI-USER-MANAGEMENT-APPLICATION](user_data_db.png)
+
+<span style="font-size: 20px; font-weight: bold;">swagger complete api view</span>
+![MULTI-USER-MANAGEMENT-APPLICATION](swagger_API_VIEW.png)
+![MULTI-USER-MANAGEMENT-APPLICATION](swagger_api_view_2.png)
+
 
 
 
