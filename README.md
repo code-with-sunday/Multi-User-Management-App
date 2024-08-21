@@ -22,9 +22,9 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-![MULTI-USER-MANAGEMENT-APPLICATION](endpoint_swagger.png)
+![MULTI-USER-MANAGEMENT-APPLICATION](image.png)
 
-[![EVENT BOOKING APPLICATION][SWAGGER-ENDPOINT-VIEW]](endpoint_swagger.png)
+[![EVENT BOOKING APPLICATION][SWAGGER-ENDPOINT-VIEW]](image.png)
 
 This project is a comprehensive Multi-User Task Management API designed to demonstrate backend development skills and proficiency. The API supports user management with role-based access control, allowing both regular users and admins to manage tasks efficiently. The project is built with the following key features:
 
@@ -63,23 +63,12 @@ This is a list of things you will need to use the software and how I got to work
 
 1. Clone the repo
    ```sh
-   git clone https://oauth:glpat-whMJBguVQBgxFiiqfCyM@gitlab.com/sundayxyz/DEV_EVENT_BOOKING-493cd35a-b8f0-fd44-a544-778ff66c07cd.git
+   git clone https://github.com/code-with-sunday/Multi-User-Management-App.git
    ```
-2. create pom.xml file to load maven
-   ```sh
-   add. 
-    
-   <?xml version="1.0" encoding="UTF-8"?>
-     ```
-     ```sh 
-   <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"> <modelVersion>4.0.0</modelVersion>
-   ```
-3. create src file and add dependencies
-   ```sh
-   src >>> main >>> java >>> dev.sunday
+2. create db in local postgres to suit db name on application.properties
+3. run application
+3. use http://localhost:8080/swagger-ui/index.html#/ to test endpoint with swagger
    
-   src >>> main >>> resources >>> application.properties
-   ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
