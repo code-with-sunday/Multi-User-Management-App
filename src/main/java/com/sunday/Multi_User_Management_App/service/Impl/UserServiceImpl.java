@@ -55,7 +55,6 @@ public class UserServiceImpl implements UserService {
             throw new UnAuthorizedException("Only Admins can create users.");
         }
 
-
         if (userRepository.findByEmail(userRequest.getEmail()) != null) {
             throw new UserAlreadyExist("User with email " + userRequest.getEmail() + " already exists.");
         }

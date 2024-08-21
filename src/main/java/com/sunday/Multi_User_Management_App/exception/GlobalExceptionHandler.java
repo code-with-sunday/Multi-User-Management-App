@@ -22,4 +22,9 @@ public class GlobalExceptionHandler {
     public ProblemDetail handleMovieNotFoundException(UserAlreadyExist ex) {
         return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
     }
+
+    @ExceptionHandler(TaskNotFound.class)
+    public ProblemDetail handleMovieNotFoundException(TaskNotFound ex) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
 }
