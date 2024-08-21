@@ -100,25 +100,10 @@ This is a list of things you will need to use the software and how I got to work
   ![EVENT BOOKING APPLICATION](login_request.png)
   ![EVENT BOOKING APPLICATION](login_response.png)
 
-- [ ] <span style="font-size: 20px; font-weight: bold;">User Create Event</span>
+- [ ] <span style="font-size: 20px; font-weight: bold;">Admin creation and Admin creating admin</span>
+  ![EVENT BOOKING APPLICATION](./admin_created.png)
+  ![EVENT BOOKING APPLICATION](./admin_creating_admin.png)
 
-  ![EVENT BOOKING APPLICATION](create_event.png)
-  ![EVENT BOOKING APPLICATION](create_event_response.png)
-
-- [ ] <span style="font-size: 20px; font-weight: bold;">Search Event</span>
-
-  ![EVENT BOOKING APPLICATION](search_event.png)
-
-- [ ] <span style="font-size: 20px; font-weight: bold;">View Events</span>
-
-  ![EVENT BOOKING APPLICATION](view_event.png)
-
-- [ ] <span style="font-size: 20px; font-weight: bold;">Publish Event / Notification</span>
-
-  ![EVENT BOOKING APPLICATION](noification.png)
-
-- [ ] <span style="font-size: 20px; font-weight: bold;">Cancel Event</span>
-  ![EVENT BOOKING APPLICATION](cancel_event.png)
 
 
 

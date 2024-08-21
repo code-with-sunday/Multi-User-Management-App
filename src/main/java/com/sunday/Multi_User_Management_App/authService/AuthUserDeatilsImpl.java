@@ -1,7 +1,7 @@
 package com.sunday.Multi_User_Management_App.authService;
 
 
-import com.sunday.Multi_User_Management_App.DTO.request.LoginRequestDTO;
+import com.sunday.Multi_User_Management_App.DTO.request.LoginRequest;
 import com.sunday.Multi_User_Management_App.DTO.request.UserSignUpRequest;
 import com.sunday.Multi_User_Management_App.DTO.response.AuthResponse;
 import com.sunday.Multi_User_Management_App.enums.ROLE;
@@ -61,9 +61,37 @@ public class AuthUserDeatilsImpl implements AuthUserDetails{
         return authResponse;
     }
 
+    @Override
+    public AuthResponse AdminSignup(UserSignUpRequest userSignUpRequest) throws Exception {
+        User user = new User();
+        user.setEmail(userSignUpRequest.getEmail());
+
+
+        User isEmailExist  = userRepository.findByEmail(user.getEmail());
+
+        if(isEmailExist != null){
+            throw new UserAlreadyExist("Email already exist with another account");
+        }
+
+        user.setEmail(userSignUpRequest.getEmail());
+        user.setPassword(passwordEncoder.encode(userSignUpRequest.getPassword()));
+        user.setRole(ROLE.ADMIN);
+        User savedUser = userRepository.save(user);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail(),user.getPassword());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        String jwt = jwtProvider.generateToken(authentication);
+        AuthResponse authResponse = new AuthResponse();
+        authResponse.setTitle("Welcome " + user.getEmail());
+        authResponse.setMessage("Register success");
+        authResponse.setRole(savedUser.getRole());
+
+        return authResponse;
+    }
+
 
     @Override
-    public AuthResponse signIn(LoginRequestDTO loginRequest) {
+    public AuthResponse signIn(LoginRequest loginRequest) {
         String username = loginRequest.getEmail();
         String password = loginRequest.getPassword();
 

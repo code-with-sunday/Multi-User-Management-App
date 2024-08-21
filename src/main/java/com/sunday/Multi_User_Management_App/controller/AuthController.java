@@ -1,7 +1,7 @@
 package com.sunday.Multi_User_Management_App.controller;
 
 import com.sunday.Multi_User_Management_App.DTO.ApiResponseBody;
-import com.sunday.Multi_User_Management_App.DTO.request.LoginRequestDTO;
+import com.sunday.Multi_User_Management_App.DTO.request.LoginRequest;
 import com.sunday.Multi_User_Management_App.DTO.request.UserSignUpRequest;
 import com.sunday.Multi_User_Management_App.DTO.response.AuthResponse;
 import com.sunday.Multi_User_Management_App.authService.AuthUserDetails;
@@ -44,6 +44,24 @@ public class AuthController {
     }
 
 
+    @Operation(summary = "Admin user", description = "Admin a new user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Admin User created successfully"),
+            @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "404", description = "Not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    @PostMapping("/admin/signup")
+
+    public ResponseEntity<ApiResponseBody<AuthResponse>> AdminSignup(@RequestBody @Valid UserSignUpRequest userSignUpRequest) throws Exception {
+        return ResponseEntity.ok(new ApiResponseBody<>(true, "User created successfully",
+                InternalCodeEnum.CARE_PULSE_001, authUserDetails.AdminSignup(userSignUpRequest)));
+
+    }
+
+
+
+
     @Operation(summary = "Login", description = "Login user")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User logged in successfully"),
@@ -52,7 +70,7 @@ public class AuthController {
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @PostMapping("/login")
-    public ResponseEntity<ApiResponseBody<AuthResponse>> signIn(@RequestBody LoginRequestDTO loginRequest){
+    public ResponseEntity<ApiResponseBody<AuthResponse>> signIn(@RequestBody LoginRequest loginRequest){
         return ResponseEntity.ok(new ApiResponseBody<>(true, "User logged in successfully",
                 InternalCodeEnum.CARE_PULSE_001, authUserDetails.signIn(loginRequest)));
     }
