@@ -5,7 +5,7 @@ import com.sunday.Multi_User_Management_App.DTO.request.LoginRequest;
 import com.sunday.Multi_User_Management_App.DTO.request.UserSignUpRequest;
 import com.sunday.Multi_User_Management_App.DTO.response.AuthResponse;
 import com.sunday.Multi_User_Management_App.enums.ROLE;
-import com.sunday.Multi_User_Management_App.exception.UserAlreadyExist;
+import com.sunday.Multi_User_Management_App.exception.UserAlreadyExistException;
 import com.sunday.Multi_User_Management_App.mapper.UserMapper;
 import com.sunday.Multi_User_Management_App.model.User;
 import com.sunday.Multi_User_Management_App.repository.UserRepository;
@@ -43,7 +43,7 @@ public class AuthUserDeatilsImpl implements AuthUserDetails{
         User isEmailExist  = userRepository.findByEmail(user.getEmail());
 
         if(isEmailExist != null){
-            throw new UserAlreadyExist("Email already exist with another account");
+            throw new UserAlreadyExistException("Email already exist with another account");
         }
 
         user.setEmail(userSignUpRequest.getEmail());
@@ -70,7 +70,7 @@ public class AuthUserDeatilsImpl implements AuthUserDetails{
         User isEmailExist  = userRepository.findByEmail(user.getEmail());
 
         if(isEmailExist != null){
-            throw new UserAlreadyExist("Email already exist with another account");
+            throw new UserAlreadyExistException("Email already exist with another account");
         }
 
         user.setEmail(userSignUpRequest.getEmail());

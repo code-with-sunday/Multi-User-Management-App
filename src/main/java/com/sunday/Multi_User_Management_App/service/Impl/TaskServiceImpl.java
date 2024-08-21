@@ -6,13 +6,12 @@ import com.sunday.Multi_User_Management_App.DTO.response.TaskResponse;
 import com.sunday.Multi_User_Management_App.enums.ROLE;
 import com.sunday.Multi_User_Management_App.enums.TagMark;
 import com.sunday.Multi_User_Management_App.enums.TaskStatus;
-import com.sunday.Multi_User_Management_App.exception.TaskNotFound;
+import com.sunday.Multi_User_Management_App.exception.TaskNotFoundException;
 import com.sunday.Multi_User_Management_App.exception.UnAuthorizedException;
-import com.sunday.Multi_User_Management_App.exception.UserNotFound;
+import com.sunday.Multi_User_Management_App.exception.UserNotFoundException;
 import com.sunday.Multi_User_Management_App.mapper.TaskMapper;
 import com.sunday.Multi_User_Management_App.model.Task;
 import com.sunday.Multi_User_Management_App.model.User;
-import com.sunday.Multi_User_Management_App.repository.TagRepository;
 import com.sunday.Multi_User_Management_App.repository.TaskRepository;
 import com.sunday.Multi_User_Management_App.repository.UserRepository;
 import com.sunday.Multi_User_Management_App.service.TaskService;
@@ -33,7 +32,6 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
     private final UserRepository userRepository;
-    private final TagRepository tagRepository;
 
     @Override
     public TaskResponse createTask(TaskRequest taskRequest) {
@@ -42,12 +40,12 @@ public class TaskServiceImpl implements TaskService {
         User user = userRepository.findByEmail(email);
 
         if (user == null) {
-            throw new UserNotFound("User not found with email: " + email);
+            throw new UserNotFoundException("User not found with email: " + email);
         }
 
         User assignedUser = userRepository.findByEmail(taskRequest.getAssignedUserEmail());
         if (assignedUser == null) {
-            throw new UserNotFound("Assigned user not found with email: " + taskRequest.getAssignedUserEmail());
+            throw new UserNotFoundException("Assigned user not found with email: " + taskRequest.getAssignedUserEmail());
         }
 
         Task task = taskMapper.mapToEntity(taskRequest);
@@ -64,13 +62,13 @@ public class TaskServiceImpl implements TaskService {
         User creator = userRepository.findByEmail(creatorEmail);
 
         if (creator == null) {
-            throw new UserNotFound("Creator not found with email: " + creatorEmail);
+            throw new UserNotFoundException("Creator not found with email: " + creatorEmail);
         }
 
         User assignedUser = userRepository.findByEmail(taskRequest.getAssignedUserEmail());
 
         if (assignedUser == null) {
-            throw new UserNotFound("Assigned user not found with email: " + taskRequest.getAssignedUserEmail());
+            throw new UserNotFoundException("Assigned user not found with email: " + taskRequest.getAssignedUserEmail());
         }
 
         Task task = taskMapper.mapToEntity(taskRequest);
@@ -87,11 +85,11 @@ public class TaskServiceImpl implements TaskService {
 
         User currentUser = userRepository.findByEmail(userEmail);
         if (currentUser == null) {
-            throw new UserNotFound("Creator not found with email: " + currentUser.getEmail());
+            throw new UserNotFoundException("Creator not found with email: " + currentUser.getEmail());
         }
         Task task = taskRepository.findById(taskId).orElse(null);
         if (task == null) {
-            throw new TaskNotFound("Task id not found: " + task.getId());
+            throw new TaskNotFoundException("Task id not found: " + task.getId());
         }
 
         if (!task.getAssignedUser().equals(currentUser)) {
@@ -111,12 +109,12 @@ public class TaskServiceImpl implements TaskService {
 
         User currentUser = userRepository.findByEmail(email);
         if (currentUser == null) {
-            throw new UserNotFound("User not found with email: " + email);
+            throw new UserNotFoundException("User not found with email: " + email);
         }
 
         Task task = taskRepository.findById(taskId).orElse(null);
         if (task == null) {
-            throw new TaskNotFound("Task not found with id: " + taskId);
+            throw new TaskNotFoundException("Task not found with id: " + taskId);
         }
 
         if (!currentUser.getRole().equals(ROLE.ADMIN) && !task.getAssignedUser().equals(currentUser)) {

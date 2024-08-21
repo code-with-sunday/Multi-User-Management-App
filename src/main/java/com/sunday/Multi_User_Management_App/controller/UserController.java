@@ -6,7 +6,7 @@ import com.sunday.Multi_User_Management_App.DTO.request.UserRequest;
 import com.sunday.Multi_User_Management_App.DTO.response.UserResponse;
 import com.sunday.Multi_User_Management_App.enums.InternalCodeEnum;
 import com.sunday.Multi_User_Management_App.exception.UnAuthorizedException;
-import com.sunday.Multi_User_Management_App.exception.UserAlreadyExist;
+import com.sunday.Multi_User_Management_App.exception.UserAlreadyExistException;
 import com.sunday.Multi_User_Management_App.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -41,25 +41,5 @@ public class UserController {
                 InternalCodeEnum.CARE_PULSE_001, userResponse));
     }
 
-    @Operation(summary = "Create User", description = "Create a new user (Admin only)")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "User created successfully"),
-            @ApiResponse(responseCode = "400", description = "Bad request"),
-            @ApiResponse(responseCode = "403", description = "Access denied"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")
-    })
-    @PostMapping("/create-user")
-    public ResponseEntity<ApiResponseBody<UserResponse>> createAdmin(@RequestBody @Valid UserRequest userRequest) {
-        try {
-            UserResponse userResponse = userService.createAdmin(userRequest);
-            return ResponseEntity.ok(new ApiResponseBody<>(true, "User created successfully",
-                    InternalCodeEnum.CARE_PULSE_001, userResponse));
-        } catch (UnAuthorizedException e) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ApiResponseBody<>(false, e.getMessage(),
-                    InternalCodeEnum.CARE_PULSE_002, null));
-        } catch (UserAlreadyExist e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponseBody<>(false, e.getMessage(),
-                    InternalCodeEnum.CARE_PULSE_003, null));
-        }
-    }
+
 }

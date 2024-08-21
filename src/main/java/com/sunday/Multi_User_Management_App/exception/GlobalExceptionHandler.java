@@ -13,18 +13,23 @@ public class GlobalExceptionHandler {
         return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
-    @ExceptionHandler(UserNotFound.class)
-    public ProblemDetail handleMovieNotFoundException(UserNotFound ex) {
+    @ExceptionHandler(UserNotFoundException.class)
+    public ProblemDetail handleMovieNotFoundException(UserNotFoundException ex) {
         return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
-    @ExceptionHandler(UserAlreadyExist.class)
-    public ProblemDetail handleMovieNotFoundException(UserAlreadyExist ex) {
+    @ExceptionHandler(UserAlreadyExistException.class)
+    public ProblemDetail handleMovieNotFoundException(UserAlreadyExistException ex) {
         return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
-    @ExceptionHandler(TaskNotFound.class)
-    public ProblemDetail handleMovieNotFoundException(TaskNotFound ex) {
+    @ExceptionHandler(TaskNotFoundException.class)
+    public ProblemDetail handleMovieNotFoundException(TaskNotFoundException ex) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
+    @ExceptionHandler(CommentNotFoundException.class)
+    public ProblemDetail handleMovieNotFoundException(CommentNotFoundException ex) {
         return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 }

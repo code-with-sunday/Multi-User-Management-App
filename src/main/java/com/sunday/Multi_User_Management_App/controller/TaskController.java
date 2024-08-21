@@ -6,9 +6,9 @@ import com.sunday.Multi_User_Management_App.DTO.response.TaskResponse;
 import com.sunday.Multi_User_Management_App.enums.InternalCodeEnum;
 import com.sunday.Multi_User_Management_App.enums.TagMark;
 import com.sunday.Multi_User_Management_App.enums.TaskStatus;
-import com.sunday.Multi_User_Management_App.exception.TaskNotFound;
+import com.sunday.Multi_User_Management_App.exception.TaskNotFoundException;
 import com.sunday.Multi_User_Management_App.exception.UnAuthorizedException;
-import com.sunday.Multi_User_Management_App.exception.UserNotFound;
+import com.sunday.Multi_User_Management_App.exception.UserNotFoundException;
 import com.sunday.Multi_User_Management_App.service.TaskService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -61,7 +61,7 @@ public class TaskController {
             TaskResponse taskResponse = taskService.assignTask(taskRequest);
             return ResponseEntity.ok(new ApiResponseBody<>(true, "Task assigned successfully",
                     InternalCodeEnum.CARE_PULSE_001, taskResponse));
-        } catch (UserNotFound e) {
+        } catch (UserNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponseBody<>(false, e.getMessage(),
                     InternalCodeEnum.CARE_PULSE_004, null));
         } catch (Exception e) {
@@ -107,7 +107,7 @@ public class TaskController {
         } catch (UnAuthorizedException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ApiResponseBody<>(false, e.getMessage(),
                     InternalCodeEnum.CARE_PULSE_002, null));
-        } catch (TaskNotFound e) {
+        } catch (TaskNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponseBody<>(false, e.getMessage(),
                     InternalCodeEnum.CARE_PULSE_003, null));
         } catch (Exception e) {

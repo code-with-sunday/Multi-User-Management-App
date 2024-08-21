@@ -5,8 +5,8 @@ import com.sunday.Multi_User_Management_App.DTO.request.UserRequest;
 import com.sunday.Multi_User_Management_App.DTO.response.UserResponse;
 import com.sunday.Multi_User_Management_App.enums.ROLE;
 import com.sunday.Multi_User_Management_App.exception.UnAuthorizedException;
-import com.sunday.Multi_User_Management_App.exception.UserAlreadyExist;
-import com.sunday.Multi_User_Management_App.exception.UserNotFound;
+import com.sunday.Multi_User_Management_App.exception.UserAlreadyExistException;
+import com.sunday.Multi_User_Management_App.exception.UserNotFoundException;
 import com.sunday.Multi_User_Management_App.mapper.UserMapper;
 import com.sunday.Multi_User_Management_App.model.User;
 import com.sunday.Multi_User_Management_App.repository.UserRepository;
@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
         String email = (String) authentication.getPrincipal();
         User user = userRepository.findByEmail(email);
         if (user != null) {
-            throw new UserNotFound("User with email " + email + " already exists");
+            throw new UserNotFoundException("User with email " + email + " already exists");
         }
         user.setFirstName(userProfileRequest.getFirstName());
         user.setLastName(userProfileRequest.getLastName());
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
         }
 
         if (userRepository.findByEmail(userRequest.getEmail()) != null) {
-            throw new UserAlreadyExist("User with email " + userRequest.getEmail() + " already exists.");
+            throw new UserAlreadyExistException("User with email " + userRequest.getEmail() + " already exists.");
         }
 
         User user = new User();
