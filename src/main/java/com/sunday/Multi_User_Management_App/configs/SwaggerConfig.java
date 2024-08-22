@@ -26,7 +26,7 @@ import org.springframework.context.annotation.Configuration;
         ),
         termsOfService = "http://swagger.io/terms/"),
         servers = {
-                @Server(url = "http://localhost:8080",
+                @Server(url = "http://localhost:8080/api/v1",
                         description = "Local Server"),
         },
         security = {

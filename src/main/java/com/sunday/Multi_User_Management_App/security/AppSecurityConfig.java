@@ -1,6 +1,5 @@
 package com.sunday.Multi_User_Management_App.security;
 
-
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +15,6 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 @Configuration
@@ -28,12 +26,11 @@ public class AppSecurityConfig {
 
         http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(Authorize -> Authorize
-                        .requestMatchers("/api/v1/admin/**").hasAnyRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST,"/api/v1/auth/**").permitAll()
-                        .requestMatchers("auth/signup").permitAll()
-                        .requestMatchers("/api/v1/**").authenticated()
-                        .requestMatchers("/h2-console/**").permitAll()
-                        .anyRequest().permitAll()
+                        .requestMatchers("/admin/**").hasAnyRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST,"/auth/**").permitAll()
+                        .requestMatchers("/app/**").authenticated()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .anyRequest().authenticated()
                 ).addFilterBefore(new JwtTokenValidator(), BasicAuthenticationFilter.class)
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()));
@@ -46,13 +43,11 @@ public class AppSecurityConfig {
             @Override
             public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                 CorsConfiguration cfg = new CorsConfiguration();
-                cfg.setAllowedOrigins(Arrays.asList(
-                        "http://localhost:8080"
-                ));
+                cfg.setAllowedOrigins(Collections.singletonList("http://localhost:8080"));
                 cfg.setAllowedMethods(Collections.singletonList("*"));
                 cfg.setAllowCredentials(true);
                 cfg.setAllowedHeaders(Collections.singletonList("*"));
-                cfg.setExposedHeaders(Arrays.asList("Authorization"));
+                cfg.setExposedHeaders(Collections.singletonList("Authorization"));
                 cfg.setMaxAge(3600L);
                 return cfg;
             }
